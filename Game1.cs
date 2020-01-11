@@ -75,6 +75,9 @@ namespace RPGtest
             player.animations[1] = new AnimatedSprite(playerUp, 1, 4);
             player.animations[2] = new AnimatedSprite(playerLeft, 1, 4);
             player.animations[3] = new AnimatedSprite(playerRight, 1, 4);
+
+            Enemy.enemies.Add(new Snake(new Vector2(100, 400)));
+            Enemy.enemies.Add(new Eye(new Vector2(300, 450)));
         }
 
         
@@ -97,6 +100,11 @@ namespace RPGtest
                 proj.Update(gameTime);
             }
 
+            foreach(Enemy en in Enemy.enemies)
+            {
+                en.Update(gameTime, player.Position);
+            }
+
             base.Update(gameTime);
         }
 
@@ -108,6 +116,25 @@ namespace RPGtest
 
             player.anim.Draw(spriteBatch, new Vector2(player.Position.X - 48, player.Position.Y - 48));
             spriteBatch.Begin();
+
+            foreach (Enemy en in Enemy.enemies)
+            {
+                Texture2D spriteToDraw;
+                int rad;
+
+                if (en.GetType() == typeof(Snake))
+                {
+                    spriteToDraw = snakeEnemy_Sprite;
+                    rad = 50;
+                }
+                else
+                {
+                    spriteToDraw = eyeEnemy_Sprite;
+                    rad = 73;
+                }
+
+                spriteBatch.Draw(spriteToDraw, new Vector2(en.Position.X -rad, en.Position.Y -rad), Color.White);
+            }
 
             foreach (Projectile proj in Projectile.projectiles)
             {
