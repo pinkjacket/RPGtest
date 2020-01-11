@@ -17,6 +17,8 @@ namespace RPGtest
         private Dir direction = Dir.Down;
         private bool isMoving = false;
 
+        public AnimatedSprite anim;
+
         public int Health
         {
             get
@@ -50,6 +52,7 @@ namespace RPGtest
         public void Update(GameTime gameTime) {
             KeyboardState kState = Keyboard.GetState();
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            anim.Update(gameTime);
             isMoving = false;
 
             if (kState.IsKeyDown(Keys.Right))

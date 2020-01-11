@@ -14,6 +14,8 @@ namespace RPGtest
         public int Columns { get; set; }
         private int currentFrame;
         private int totalFrames;
+        private double timer;
+        private double speed;
 
         public AnimatedSprite(Texture2D texture, int rows, int columns)
         {
@@ -22,11 +24,20 @@ namespace RPGtest
             Columns = columns;
             currentFrame = 0;
             totalFrames = Rows * Columns;
+            speed = 0.2D;
+            timer = speed;
         }
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
-            currentFrame++;
+            timer -= gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (timer <= 0)
+            {
+                currentFrame++;
+                timer = speed;
+            }
+            
             if (currentFrame == totalFrames)
                 currentFrame = 0;
         }

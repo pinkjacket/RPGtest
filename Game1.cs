@@ -70,6 +70,8 @@ namespace RPGtest
 
             bullet_Sprite = Content.Load<Texture2D>("Misc/bullet");
             heart_Sprite = Content.Load<Texture2D>("Misc/heart");
+
+            player.anim = new AnimatedSprite(playerDown, 1, 4);
         }
 
         
@@ -96,9 +98,8 @@ namespace RPGtest
         {
             GraphicsDevice.Clear(Color.ForestGreen);
 
+            player.anim.Draw(spriteBatch, player.Position);
             spriteBatch.Begin();
-
-            spriteBatch.Draw(player_Sprite, player.Position, Color.White);
 
             spriteBatch.End();
 
