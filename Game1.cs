@@ -92,8 +92,8 @@ namespace RPGtest
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            player.Update(gameTime);
+            if (player.Health > 0)
+                player.Update(gameTime);
 
             foreach (Projectile proj in Projectile.projectiles)
             {
@@ -118,6 +118,16 @@ namespace RPGtest
                 }
             }
 
+            foreach (Enemy en in Enemy.enemies)
+            {
+                int sum = player.Radius + en.Radius;
+                if(Vector2.Distance(player.Position, en.Position) < sum && player.HealthTimer <= 0)
+                {
+                    player.Health--;
+                    player.HealthTimer = 1.5f;
+                }
+            }
+
             Projectile.projectiles.RemoveAll(p => p.Collided);
             Enemy.enemies.RemoveAll(e => e.Health <= 0);
 
@@ -130,7 +140,8 @@ namespace RPGtest
         {
             GraphicsDevice.Clear(Color.ForestGreen);
 
-            player.anim.Draw(spriteBatch, new Vector2(player.Position.X - 48, player.Position.Y - 48));
+            if (player.Health > 0)
+                player.anim.Draw(spriteBatch, new Vector2(player.Position.X - 48, player.Position.Y - 48));
             spriteBatch.Begin();
 
             foreach (Enemy en in Enemy.enemies)
@@ -155,6 +166,11 @@ namespace RPGtest
             foreach (Projectile proj in Projectile.projectiles)
             {
                 spriteBatch.Draw(bullet_Sprite, new Vector2(proj.Position.X - proj.Radius, proj.Position.Y - proj.Radius), Color.White);
+            }
+
+            for (int i = 0; i < player.Health; i++)
+            {
+                spriteBatch.Draw(heart_Sprite, new Vector2(3 + i * 63, 3), Color.White);
             }
 
                 spriteBatch.End();
