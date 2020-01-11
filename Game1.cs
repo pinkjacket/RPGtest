@@ -92,6 +92,11 @@ namespace RPGtest
 
             player.Update(gameTime);
 
+            foreach (Projectile proj in Projectile.projectiles)
+            {
+                proj.Update(gameTime);
+            }
+
             base.Update(gameTime);
         }
 
@@ -104,7 +109,12 @@ namespace RPGtest
             player.anim.Draw(spriteBatch, new Vector2(player.Position.X - 48, player.Position.Y - 48));
             spriteBatch.Begin();
 
-            spriteBatch.End();
+            foreach (Projectile proj in Projectile.projectiles)
+            {
+                spriteBatch.Draw(bullet_Sprite, new Vector2(proj.Position.X - proj.Radius, proj.Position.Y - proj.Radius), Color.White);
+            }
+
+                spriteBatch.End();
 
             base.Draw(gameTime);
         }

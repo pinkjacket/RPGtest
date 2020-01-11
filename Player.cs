@@ -16,6 +16,7 @@ namespace RPGtest
         private int speed = 200;
         private Dir direction = Dir.Down;
         private bool isMoving = false;
+        private KeyboardState kStateOld = Keyboard.GetState();
 
         public AnimatedSprite anim;
         public AnimatedSprite[] animations = new AnimatedSprite[4];
@@ -107,6 +108,12 @@ namespace RPGtest
                         break;
                 }
             }
+
+            if (kState.IsKeyDown(Keys.Space) && kStateOld.IsKeyUp(Keys.Space))
+            {
+                Projectile.projectiles.Add(new Projectile(position, direction));
+            }
+            kStateOld = kState;
         }
     }
 }
