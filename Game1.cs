@@ -105,6 +105,22 @@ namespace RPGtest
                 en.Update(gameTime, player.Position);
             }
 
+            foreach(Projectile proj in Projectile.projectiles)
+            {
+                foreach(Enemy en in Enemy.enemies)
+                {
+                    int sum = proj.Radius + en.Radius;
+                    if (Vector2.Distance(proj.Position, en.Position) < sum)
+                    {
+                        proj.Collided = true;
+                        en.Health--;
+                    }
+                }
+            }
+
+            Projectile.projectiles.RemoveAll(p => p.Collided);
+            Enemy.enemies.RemoveAll(e => e.Health <= 0);
+
             base.Update(gameTime);
         }
 

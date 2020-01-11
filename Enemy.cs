@@ -51,13 +51,17 @@ namespace RPGtest
 
     class Snake : Enemy {
         public Snake(Vector2 newPos) : base(newPos) {
-            speed = 160;
+            health = 3;
+            speed = 120;
+            radius = 42;
         }
     }
 
     class Eye : Enemy {
         public Eye(Vector2 newPos) : base(newPos) {
+            health = 5;
             speed = 80;
+            radius = 45;
         }
     }
 }
