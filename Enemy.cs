@@ -45,7 +45,13 @@ namespace RPGtest
             // moves enemy toward player based on relative positions
             Vector2 moveDir = playerPos - position;
             moveDir.Normalize();
-            position += moveDir * speed * dt;
+
+            Vector2 tempPos = position;
+            tempPos += moveDir * speed * dt;
+            if (!Obstacle.didCollide(tempPos, radius))
+            {
+                position += moveDir * speed * dt;
+            }
         }
     }
 

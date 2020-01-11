@@ -104,20 +104,37 @@ namespace RPGtest
 
             if (isMoving)
             {
+                Vector2 tempPos = position;
 
                 switch (direction)
                 {
                     case Dir.Right:
-                        position.X += speed * dt;
+                        tempPos.X += speed * dt;
+                        if (!Obstacle.didCollide(tempPos, radius))
+                        {
+                            position.X += speed * dt;
+                        }
                         break;
                     case Dir.Left:
-                        position.X -= speed * dt;
+                        tempPos.X -= speed * dt;
+                        if (!Obstacle.didCollide(tempPos, radius))
+                        {
+                            position.X -= speed * dt;
+                        }
                         break;
                     case Dir.Down:
-                        position.Y += speed * dt;
+                        tempPos.Y += speed * dt;
+                        if (!Obstacle.didCollide(tempPos, radius))
+                        {
+                            position.Y += speed * dt;
+                        }
                         break;
                     case Dir.Up:
-                        position.Y -= speed * dt;
+                        tempPos.Y -= speed * dt;
+                        if (!Obstacle.didCollide(tempPos, radius))
+                        {
+                            position.Y -= speed * dt;
+                        }
                         break;
                     default:
                         break;

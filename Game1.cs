@@ -78,6 +78,9 @@ namespace RPGtest
 
             Enemy.enemies.Add(new Snake(new Vector2(100, 400)));
             Enemy.enemies.Add(new Eye(new Vector2(300, 450)));
+
+            Obstacle.obstacles.Add(new Tree(new Vector2(500, 100)));
+            Obstacle.obstacles.Add(new Bush(new Vector2(700, 300)));
         }
 
         
@@ -115,6 +118,10 @@ namespace RPGtest
                         proj.Collided = true;
                         en.Health--;
                     }
+                }
+                if (Obstacle.didCollide(proj.Position, proj.Radius))
+                {
+                    proj.Collided = true;
                 }
             }
 
@@ -161,6 +168,16 @@ namespace RPGtest
                 }
 
                 spriteBatch.Draw(spriteToDraw, new Vector2(en.Position.X -rad, en.Position.Y -rad), Color.White);
+            }
+
+            foreach(Obstacle o in Obstacle.obstacles)
+            {
+                Texture2D spriteToDraw;
+                if (o.GetType() == typeof(Tree))
+                    spriteToDraw = tree_Sprite;
+                else
+                    spriteToDraw = bush_Sprite;
+                spriteBatch.Draw(spriteToDraw, o.Position, Color.White);
             }
 
             foreach (Projectile proj in Projectile.projectiles)
