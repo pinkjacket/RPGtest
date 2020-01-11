@@ -18,6 +18,7 @@ namespace RPGtest
         private bool isMoving = false;
 
         public AnimatedSprite anim;
+        public AnimatedSprite[] animations = new AnimatedSprite[4];
 
         public int Health
         {
@@ -52,7 +53,13 @@ namespace RPGtest
         public void Update(GameTime gameTime) {
             KeyboardState kState = Keyboard.GetState();
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            anim.Update(gameTime);
+
+            anim = animations[(int)direction];
+
+            if (isMoving)
+                anim.Update(gameTime);
+            else
+                anim.setFrame(1);
             isMoving = false;
 
             if (kState.IsKeyDown(Keys.Right))
